@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %} Расписание {% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col text-center">
+            <form id="MyForm" class="form-row" action="{% url 'main_page' %}" method="get">
+                {#            {% csrf_token %}#}
+                {#                Поле выбора Препода или группы#}
+                <div class="form-floating">
+                    <label for="floatingSelect">{{ search }}</label>
+                    <select onchange="this.form.submit()" name="search" class="form-select" id="floatingSelect"
+                            aria-label="Floating label select example">
+                        <option class="opt">Введите Преподавателя,группу или кабинет</option>
+                        <optgroup label="Преподаватели">
+                            {% for teach in teacher_name %}
+                                <option value="{{ teach.last_name }}">{{ teach.last_name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="Группы">
+                            {% for group in group_name %}
+                                <option value="{{ group.group_name }}">{{ group.group_name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="Кабинет">
+                            {% for cabinet in cabinet_name %}
+                                <option value="{{ cabinet.cabinet_name }}">{{ cabinet.cabinet_name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+                {#                <button type="submit">Поисk</button>#}
+                {#                <div class="input-group">#}
+                {#                    <div id="search-autocomplete" class="form-outline">#}
+                {#                        <input name="search" type="text" id="form1" class="form-control"/>#}
+                {#                        <label class="form-label" for="form1">Поиск</label>#}
+                {#                    </div>#}
+                {#                    <button type="submit" class="btn btn-primary">#}
+                {#                        <i class="fas fa-search"></i>#}
+                {#                    </button>#}
+                {#                </div>#}
+
+                {#            Суперпользователи#}
+                {#                {% if request.user.is_superuser %}#}
+                {#                    <div class="form-group mx-sm-3 mb-2">#}
+                {#                        <input type="search" class="form-control" name="date_start" placeholder="Дата начала">#}
+                {#                    </div>#}
+                {#                    <div class="form-group mx-sm-3 mb-2">#}
+                {#                        <input type="date" class="form-control" name="date_end" placeholder="Дата конца">#}
+                {#                    </div>#}
+                {#                {% endif %}#}
+            </form>
+            {# Переключатели #}
+            <ul class="nav nav-tabs nav-justified mb-3" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Home
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Profile
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Contact
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <p>{{ previous }}</p>
+                    {% for table in timetable %}
+                        {% if table.date == previous %}
+                            <div class="div">
+                                <div class="number">{{ table.number }}</div>
+                                <div class="time">{{ table.date }}</div>
+                                <div class="group">{{ table.group.group_name }}</div>
+                                <div class="teacher">{{ table.teacher.last_name }}</div>
+                                <div class="cabinet">{{ table.cabinet.cabinet_name }}</div>
+                                <div class="lesson">{{ table.lesson.lesson_name }}</div>
+                                <div class="subgroups">{{ table.lesson.subgroups }}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <p>{{ current }}</p>
+                    {% for table in timetable %}
+                        {% if table.date == current %}
+                            <ul class="ul">
+                                <li>{{ table.number }}</li>
+                                <li>{{ table.date }}</li>
+                                <li>{{ table.group.group_name }}</li>
+                                <li>{{ table.teacher.last_name }}</li>
+                                <li>{{ table.cabinet.cabinet_name }}</li>
+                                <li>{{ table.lesson.lesson_name }}</li>
+                                <li>{{ table.lesson.subgroups }}</li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <p>{{ next }}</p>
+                    {% for table in timetable %}
+                        {% if table.date == next %}
+                            <ul>
+                                <li>{{ table.number }}</li>
+                                <li>{{ table.date }}</li>
+                                <li>{{ table.group.group_name }}</li>
+                                <li>{{ table.teacher.last_name }}</li>
+                                <li>{{ table.cabinet.cabinet_name }}</li>
+                                <li>{{ table.lesson.lesson_name }}</li>
+                                <li>{{ table.lesson.subgroups }}</li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

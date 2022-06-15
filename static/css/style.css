@@ -7,6 +7,7 @@
 html{
     font-size: 18px;
     color: black;
+    font-family: Inter, sans-serif!important;
 }
 .dark html{
     font-size: 18px;
@@ -21,7 +22,6 @@ html{
 }
 
 body {
-    font-family: Roboto, sans-serif!important;
     background-color: #F0F0F0!important;
     color: #000!important;
 }
@@ -52,7 +52,6 @@ body {
 
 h2 {
     font-size: 32px!important;
-    font-family: Inter, sans-serif;
 }
 
 .form-select {
@@ -64,15 +63,14 @@ h2 {
     background-color: rgba(66, 70, 77, 0);
 }
 
-.dark option, optgroup{
+.dark optgroup {
     background-color: #42464D;
     color: white;
 }
-
-.dark option:hover{
-    background-color: #2F3136;
+.dark option {
+    background-color: #42464D;
+    color: white;
 }
-
 .opt {
     display: none;
 }
@@ -85,16 +83,17 @@ h2 {
     width: 100% !important;
 }
 .dark .nav-tabs .nav-link.active {
-    color: #7595FF!important;
+    color: #7595FF;
     border-color: #7595FF;
-    background-color: #2F3136;
-}
-.nav-link {
-    color: rgba(255, 255, 255, 0.6) !important;
     background-color: #2F3136!important;
 }
-.nav-link:hover {
+.dark .nav-tabs .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #202225 !important;;
+}
+.dark .nav-tabs .nav-link:hover {
     opacity: 0.6;
+    background-color: #2F3136!important;
 }
 
 .div {
